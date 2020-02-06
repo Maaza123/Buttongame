@@ -10,7 +10,7 @@ class App extends React.Component {
   }
 
   callAPI() {
-    fetch('http://localhost:5000')
+    fetch('/testi')
     .then(response => response.json())
     .then(data => {
       this.setState({apiResponse: data.homma})
@@ -23,6 +23,7 @@ class App extends React.Component {
   render(){
     return (
       <div className='App'>
+        <Myform />
         <p>state: {this.state.apiResponse}</p>
       </div>
     );

@@ -23,9 +23,8 @@ if(PORT == null || PORT == ""){
 app
     .use(cors())
     .use(cookieParser())
-    .use(express.static('.././client'))
+    .use('/', express.static(path.join(__dirname, '../client/build')))
     .use(bodyParser.urlencoded({extended:true}))
-
     .use(require('./routes'));
 
 server.listen(PORT, function(){

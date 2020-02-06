@@ -3,8 +3,7 @@ const router = express.Router();
 const path = require('path');
 
 router.get('/', function(req, res){
-    let cookie = req.cookies.playerid;
-    console.log('fetched');
-    res.send({'homma' : 'toimii'});
+    console.log('fetchedindex');
+    res.sendFile(path.join(appRoot, '../client/build/index.html'));
     });
 module.exports = router;
