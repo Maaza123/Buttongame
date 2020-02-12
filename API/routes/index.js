@@ -2,8 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-router.use('/testi', require('./test'));
-router.use('/game', require('./game'));
-router.use('/', require('./init'))
+router.use('/auth', require('./auth'));
+router.use('/makeplayer', require('./makeplayer'));
 
 module.exports = router;

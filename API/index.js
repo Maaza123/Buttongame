@@ -21,42 +21,50 @@ if(PORT == null || PORT == ""){
 }
 
 app
-    .use(cors())
+    .use(cors({
+        origin: 'http://localhost:3000',
+        credentials: true
+    }))
     .use(cookieParser())
-    .use('/', express.static(path.join(__dirname, '../client/build')))
+    .use('/', express.static(path.join(__dirname, '../build/public')))
     .use(bodyParser.urlencoded({extended:true}))
-    .use(require('./routes'));
+    .use(bodyParser.json())
+    .use(require('./routes'))
+
+    .get('*', (req, res) => res.sendFile('../client/build/index.html'));
 
 server.listen(PORT, function(){
     console.log(`Listening on ${ PORT }`);
 });
 
-io.on('connection', function(socket){
+io.
+    on('connection', function(socket){
     console.log('Connected to socket :' + socket.id);
-    var cookies = cookie.parse(socket.handshake.headers.cookie);
-    getPlayerData(cookies.playerid).then((playerdata)=>{
-        let myy = {
-            'id' : playerdata.id,
-            'player_name' : playerdata.player_name,
-            'points' : playerdata.points                
-        };
-        connectedPlayers.push(myy);
-        let sendData = [];
-        connectedPlayers.forEach((player) =>{
-            sendData.push({ 
-                'player_name' : player.player_name,
-                'points' : player.points
-            });
-        console.log('sendData: ' + sendData);
-        io.emit('playerdata', sendData);
-        });
-    });         
+    var cookies;         
         
     socket
-
+        .on('init', function(data){
+            cookies = cookie.parse(data);
+            getPlayerData(cookies.id).then((playerdata)=>{
+                let myy = {
+                    'id' : playerdata.id,
+                    'player_name' : playerdata.player_name,
+                    'points' : playerdata.points                
+                };
+                    connectedPlayers.push(myy);
+                    let sendData = [];
+                    connectedPlayers.forEach((player) =>{
+                        sendData.push({ 
+                            'player_name' : player.player_name,
+                            'points' : player.points
+                        });
+                    io.emit('playerdata', sendData);
+                });
+            });
+        })
         .on('buttonclick', function(){
             //funktio: tee tarvittavat toimenpiteet
-            getPlayerData(cookies.playerid)
+            getPlayerData(cookies.id)
             .then((playerdata) => {
                 if(playerdata.points > 0){
                     return true;
@@ -65,7 +73,7 @@ io.on('connection', function(socket){
                 }
             }).then((pointsLeft) => {
                 if(pointsLeft){
-                    ButtonClick(cookies.playerid)
+                    ButtonClick(cookies.id)
                     .then((playerdata) =>{
 
                         let sendData = [];
@@ -80,10 +88,10 @@ io.on('connection', function(socket){
                         });
                         //palauta peli tilanne
                         io.emit('playerdata', sendData);
+                        socket.emit('pushesLeft',  playerdata.pushesLeft);
                         if(playerdata.pointsWon != 0){
                             io.emit('wonPoints', playerdata.pointsWon, playerdata.player_name);
                         }
-                        socket.emit('pushesLeft',  playerdata.pushesLeft);
                     });
                 }else{
                     console.log('No points left');
@@ -91,10 +99,10 @@ io.on('connection', function(socket){
             });            
         })
         .on('resetpoints', function(){
-            resetpoints(cookies.playerid).then((playerpoints) =>{
+            resetpoints(cookies.id).then((playerpoints) =>{
                 let sendData = [];
                 connectedPlayers.forEach((player) =>{
-                    if(player.id == cookies.playerid){
+                    if(player.id == cookies.id){
                         player.points = playerpoints;
                     };
                     sendData.push({ 
@@ -109,7 +117,7 @@ io.on('connection', function(socket){
         .on('disconnect', function(){
             console.log('Disconnected socket :'+ socket.id);
                 for( var i = 0; i < connectedPlayers.length; i++){
-                     if (connectedPlayers[i].id == cookies.playerid) {
+                     if (connectedPlayers[i].id == cookies.id) {
                         connectedPlayers.splice(i, 1);
                     };
                  };

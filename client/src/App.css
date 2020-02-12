@@ -64,3 +64,38 @@
 .button:active{
   background-color: rgb(205, 248, 255);
 }
+
+#gamebutton {
+  background-color: rgb(255, 0, 0);
+  color: white;
+  font-size: 60px;
+  border:none;
+  box-shadow: 0 8px rgb(131, 131, 131);
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+  border: ridge;
+}
+#gamebutton:active{
+  transform: translateY(8px);
+  box-shadow: none;
+}
+*:focus{
+  outline:none;
+}
+#PLayerWindow{
+  position: relative;
+  float: right;
+  background-color: lightblue;
+  width: 110px;
+  height: 110px;
+  overflow: auto;
+}
+#Pushesleft{
+  position: relative;
+  float: left;
+  color: white;
+  font-size: 50px;
+  height: 100px;
+  width: 100px;
+}

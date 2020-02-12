@@ -8,8 +8,20 @@ class Myform extends React.Component  {
             value : 'give name'
         }
     }
-    handleClick = () =>{
+    clearInput = () =>{
         this.setState({value : ''})
+    }
+    sendName =() => {
+        fetch('/makeplayer', {
+            method : 'post',
+            headers: {'Content-Type':'application/json'},
+            body : JSON.stringify({playername : this.state.value})
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            this.props.changeAuth(data.auth);
+        });
     }
     changeInput = (event) =>{
         this.setState({value : event.target.value});
@@ -19,14 +31,13 @@ class Myform extends React.Component  {
 
                 <form className='Myform'>
                     <h1 className='nappulaPeli'>NAPPULAPELI</h1>
-                    <input type='Text' className='textfield' value={this.state.value} onFocus={this.handleClick} onInput={this.changeInput} />
-                    <input type='Button' className='button' value = 'Submit' />     
+                    <input type='Text' className='textfield' value={this.state.value} onFocus={this.clearInput} onInput={this.changeInput} />
+                    <input type='Button' className='button' value = 'Submit' onClick={this.sendName} />     
                 </form> 
                       
         );    
     }
-    
-    } 
+} 
     
 
 export default Myform;
