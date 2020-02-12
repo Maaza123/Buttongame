@@ -23,12 +23,12 @@ if(PORT == null || PORT == ""){
 app
     .use(cors())
     .use(cookieParser())
-    .use('/', express.static(path.join(__dirname + '../client/build')))
+    .use(express.static(path.join(__dirname + '../client/build')))
     .use(bodyParser.urlencoded({extended:true}))
     .use(bodyParser.json())
     .use(require('./routes'))
 
-    .get('*', (req, res) => res.sendFile(path.join(__dirname, '../client/build/index.html')));
+    .get('/', (req, res) => res.sendFile(path.join(__dirname, '../client/build/index.html')));
 
 server.listen(PORT, function(){
     console.log(`Listening on ${ PORT }`);
