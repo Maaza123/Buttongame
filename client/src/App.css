@@ -37,7 +37,6 @@
   border-radius: 36px;
   background-color: rgba(97, 209, 170, 0.2);
   border-radius: 25px;
-
 }
 .Myform .textfield {
   position: relative;
@@ -63,7 +62,6 @@
 .button:active{
   background-color: rgb(205, 248, 255);
 }
-
 #gamebutton {
   background-color: rgb(255, 0, 0);
   color: white;
