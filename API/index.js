@@ -26,7 +26,7 @@ app
         credentials: true
     }))
     .use(cookieParser())
-    .use('/', express.static(path.join(__dirname, '../build/public')))
+    .use('/', express.static('../client/build'))
     .use(bodyParser.urlencoded({extended:true}))
     .use(bodyParser.json())
     .use(require('./routes'))
