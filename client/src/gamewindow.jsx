@@ -1,6 +1,7 @@
 import React from 'react';
 import Gamebutton from './gamebutton.jsx';
 import socketIOclient from 'socket.io-client';
+import OutOfPointsPopup from './outofpointspopup.jsx'
 import './gamewindow.css';
 
 const socket = socketIOclient({
@@ -14,8 +15,10 @@ class GameWindow extends React.Component{
         this.state = ({
             pushesLeft : '?',
             connectedPlayers : [],
-            PointsWon : []
+            PointsWon : [],
+            OutOfPoints : false
         })
+        this.ClosePopUp = this.ClosePopUp.bind(this);
         socket
             .on('playerdata', (players) =>{
             this.setState({connectedPlayers : players});
@@ -24,6 +27,9 @@ class GameWindow extends React.Component{
             .on('pushesLeft', (pushesLeft) =>{
             this.HandlePushesLeft(pushesLeft);
         })
+            .on('outofpoints', () => {
+                this.OpenPopup();
+            })
             .on('wonPoints', (PointsWon) =>{
                 this.HandlePointsWon(PointsWon);
         });
@@ -35,6 +41,12 @@ class GameWindow extends React.Component{
     }
     HandlePushesLeft(pushesLeft){
         this.setState({pushesLeft : pushesLeft});    
+    }
+    OpenPopup =() =>{
+        this.setState({OutOfPoints : true});
+    }
+    ClosePopUp(){
+        this.setState({OutOfPoints : false});
     }
     componentDidMount(){
         socket.emit('init', document.cookie);
@@ -59,6 +71,8 @@ class GameWindow extends React.Component{
                     ))}                                                
                 </div>                   
                 <Gamebutton socket ={socket} {...this.state}/>
+                {this.state.OutOfPoints ? <OutOfPointsPopup socket = {socket} ClosePopUp={this.ClosePopUp}/>
+                : null}
             </div>
         )
     }   

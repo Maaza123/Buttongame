@@ -62,11 +62,7 @@ io.
             //funktio: tee tarvittavat toimenpiteet
             getPlayerData(cookies.id)
             .then((playerdata) => {
-                if(playerdata.points > 0){
-                    return true;
-                }else{
-                    return false;
-                }
+                return(playerdata.points > 0)
             }).then((pointsLeft) => {
                 if(pointsLeft){
                     ButtonClick(cookies.id)
@@ -97,6 +93,7 @@ io.
                         }
                     });
                 }else{
+                    socket.emit('outofpoints');
                     console.log('No points left');
                 }
             });            
