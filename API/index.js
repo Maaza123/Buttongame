@@ -28,8 +28,6 @@ app
     .use(bodyParser.json())
     .use(require('./routes'))
 
-    .get('*', (req, res) => res.sendFile(path.join(__dirname, '../client/build/index.html')));
-
 server.listen(PORT, function(){
     console.log(`Listening on ${ PORT }`);
 });
