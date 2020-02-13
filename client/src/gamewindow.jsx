@@ -29,10 +29,8 @@ class GameWindow extends React.Component{
         });
     }
     HandlePointsWon(PointsWon){
-        let NewArray = this.state.PointsWon;
-            NewArray.unshift(PointsWon);
             this.setState({
-                PointsWon : NewArray
+                PointsWon : PointsWon
             }); 
     }
     HandlePushesLeft(pushesLeft){

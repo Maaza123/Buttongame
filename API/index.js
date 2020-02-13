@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 let counter = module.exports =  0;
 let connectedPlayers = [];
+let PointsWonArray = [];
 const getPlayerData = require('./scripts/querygetplayerdata');
 const cookie = require('cookie');
 const ButtonClick = require(appRoot + '/gamelogic/buttonclick');
@@ -88,7 +89,11 @@ io.
                                 'player_name' : playerdata.player_name,
                                 'pointsWon' : playerdata.pointsWon
                             };
-                            io.emit('wonPoints', sendData);
+                            PointsWonArray.unshift(sendData);
+                            if(PointsWonArray.length > 18){
+                                PointsWonArray.splice(-1,1);
+                            }
+                            io.emit('wonPoints', PointsWonArray);
                         }
                     });
                 }else{
