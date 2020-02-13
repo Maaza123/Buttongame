@@ -28,6 +28,7 @@ class GameWindow extends React.Component{
                 this.HandlePointsWon(PointsWon);
         });
     }
+    
     HandlePointsWon(PointsWon){
             this.setState({
                 PointsWon : PointsWon
@@ -42,22 +43,22 @@ class GameWindow extends React.Component{
     render(){
         return (
             <div>
-                <div id='PLayerContainer'>
-                    <div className='HeaderContainer'>
-                        <p>Connected Players</p>
-                    </div>
-                    {this.state.connectedPlayers.map((player, index) => (
-                        <li className='WindowList'key={index}>{player.player_name} : {player.points}</li>
-                    ))}
-                    </div>
-                    <div id='PointsWonContainer'>
-                        <div className='HeaderContainer'>
-                            <p>Points Won</p>
-                        </div>                            
-                                {this.state.PointsWon.map((player, index) => (
-                                <li className='WindowList'key={index}>Player {player.player_name} won {player.pointsWon} points</li>
-                            ))}                                                
-                    </div>                   
+                <div className='HeaderContainer topright'>
+                    <p>Connected Players</p>
+                </div>
+                <div className='ListContainer bottomright'>
+                {this.state.connectedPlayers.map((player, index) => (
+                    <li className='WindowList'key={index}>{player.player_name} : {player.points}</li>
+                ))}
+                </div>                
+                    <div className='HeadContainer topleft'>
+                        <p>Points Won</p>
+                    </div>                            
+                <div className='ListContainer bottomleft'>
+                        {this.state.PointsWon.map((player, index) => (
+                        <li className='WindowList'key={index}>Player {player.player_name} won {player.pointsWon} points</li>
+                    ))}                                                
+                </div>                   
                 <Gamebutton socket ={socket} {...this.state}/>
             </div>
         )

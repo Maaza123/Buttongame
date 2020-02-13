@@ -24,7 +24,7 @@ if(PORT == null || PORT == ""){
 app
     .use(cors())
     .use(cookieParser())
-    .use(express.static(path.join(__dirname, '../client/build')))
+    .use(express.static(path.join(__dirname, '../client/public')))
     .use(bodyParser.urlencoded({extended:true}))
     .use(bodyParser.json())
     .use(require('./routes'))
@@ -62,11 +62,7 @@ io.
             //funktio: tee tarvittavat toimenpiteet
             getPlayerData(cookies.id)
             .then((playerdata) => {
-                if(playerdata.points > 0){
-                    return true;
-                }else{
-                    return false;
-                }
+                return(playerdata.points > 0)
             }).then((pointsLeft) => {
                 if(pointsLeft){
                     ButtonClick(cookies.id)
@@ -81,6 +77,7 @@ io.
                                 'points' : player.points
                             });
                         });
+                        if(player.points<1)() => socket.emit('OutOfPoints');
                         //palauta peli tilanne
                         io.emit('playerdata', sendData);
                         socket.emit('pushesLeft',  playerdata.pushesLeft);
@@ -97,6 +94,7 @@ io.
                         }
                     });
                 }else{
+                    if(player.points<1)() => socket.emit('OutOfPoints');
                     console.log('No points left');
                 }
             });            
