@@ -13,7 +13,7 @@ class Gamebutton extends React.Component{
       }
     render(){
         return(
-            <button id='gamebutton' onClick={() =>this.HandleButtonClick()}>LOL</button>
+        <button id='gamebutton' onClick={() =>this.HandleButtonClick()}>{this.props.pushesLeft}</button>
         )
     }    
 }

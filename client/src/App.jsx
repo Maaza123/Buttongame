@@ -10,7 +10,6 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      apiResponse: '',
       auth : false};
     this.changeAuth = this.changeAuth.bind(this);
   }
@@ -42,14 +41,12 @@ class App extends React.Component {
         <div className='App'>
           <Gamewindow />
           {this.playSong()}
-          <p>state: {this.state.apiResponse}</p>
         </div>
       )
     }else{
       return (
         <div className='App'>
           <Myform changeAuth = {this.changeAuth}/>
-          <p>state: {this.state.apiResponse}</p>
         </div>
       );
     }

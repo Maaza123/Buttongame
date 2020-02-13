@@ -70,7 +70,6 @@ io.
                 if(pointsLeft){
                     ButtonClick(cookies.id)
                     .then((playerdata) =>{
-
                         let sendData = [];
                         connectedPlayers.forEach((player) =>{
                             if(player.id == playerdata.id){
@@ -85,7 +84,11 @@ io.
                         io.emit('playerdata', sendData);
                         socket.emit('pushesLeft',  playerdata.pushesLeft);
                         if(playerdata.pointsWon != 0){
-                            io.emit('wonPoints', playerdata.pointsWon, playerdata.player_name);
+                            let sendData = {
+                                'player_name' : playerdata.player_name,
+                                'pointsWon' : playerdata.pointsWon
+                            };
+                            io.emit('wonPoints', sendData);
                         }
                     });
                 }else{
