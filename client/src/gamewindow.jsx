@@ -42,22 +42,22 @@ class GameWindow extends React.Component{
     render(){
         return (
             <div>
-                <div id='PLayerContainer'>
-                    <div className='HeaderContainer'>
-                        <p>Connected Players</p>
-                    </div>
+                <div className='HeaderContainer topright BorderLeft Header'>
+                    <p className='Header'>Connected Players</p>
+                </div>
+                <div className='ListContainer bottomright BorderLeft'>
                     {this.state.connectedPlayers.map((player, index) => (
                         <li className='WindowList'key={index}>{player.player_name} : {player.points}</li>
                     ))}
-                    </div>
-                    <div id='PointsWonContainer'>
-                        <div className='HeaderContainer'>
-                            <p>Points Won</p>
-                        </div>                            
-                                {this.state.PointsWon.map((player, index) => (
-                                <li className='WindowList'key={index}>Player {player.player_name} won {player.pointsWon} points</li>
-                            ))}                                                
-                    </div>                   
+                </div>
+                <div className='HeaderContainer topleft BorderRight'>
+                    <p className='Header'>Points Won</p>
+                </div>
+                <div className='ListContainer bottomleft BorderRight'>                            
+                    {this.state.PointsWon.map((player, index) => (
+                        <li className='WindowList'key={index}>Player {player.player_name} won {player.pointsWon} points</li>
+                    ))}                                                
+                </div>                   
                 <Gamebutton socket ={socket} {...this.state}/>
             </div>
         )
