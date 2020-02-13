@@ -8,6 +8,13 @@ class Gamebutton extends React.Component{
         super(props);
     }
     HandleButtonClick = () => {
+        const sound = new Howl({
+            src: [src],
+            autoplay: false,
+            loop: false,
+            volume: (1)
+          });
+          sound.play();
         this.props.socket.emit('buttonclick');
         console.log('lähti');
       }

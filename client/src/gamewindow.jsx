@@ -1,6 +1,7 @@
 import React from 'react';
 import Gamebutton from './gamebutton.jsx';
 import socketIOclient from 'socket.io-client';
+import OutOfPointsPopup from './outofpointspopup.jsx'
 import './gamewindow.css';
 
 const socket = socketIOclient({
@@ -14,8 +15,10 @@ class GameWindow extends React.Component{
         this.state = ({
             pushesLeft : '?',
             connectedPlayers : [],
-            PointsWon : []
+            PointsWon : [],
+            OutOfPoints : false
         })
+        this.ClosePopUp = this.ClosePopUp.bind(this);
         socket
             .on('playerdata', (players) =>{
             this.setState({connectedPlayers : players});
@@ -24,6 +27,9 @@ class GameWindow extends React.Component{
             .on('pushesLeft', (pushesLeft) =>{
             this.HandlePushesLeft(pushesLeft);
         })
+            .on('outofpoints', () => {
+                this.OpenPopup();
+            })
             .on('wonPoints', (PointsWon) =>{
                 this.HandlePointsWon(PointsWon);
         });
@@ -37,29 +43,38 @@ class GameWindow extends React.Component{
     HandlePushesLeft(pushesLeft){
         this.setState({pushesLeft : pushesLeft});    
     }
+    OpenPopup =() =>{
+        this.setState({OutOfPoints : true});
+    }
+    ClosePopUp(){
+        this.setState({OutOfPoints : false});
+    }
     componentDidMount(){
         socket.emit('init', document.cookie);
     }          
     render(){
         return (
             <div>
-                <div className='HeaderContainer topright'>
-                    <p>Connected Players</p>
+
+                <div className='HeaderContainer topright BorderLeft'>
+                    <p className='Header'>Connected Players</p>
                 </div>
-                <div className='ListContainer bottomright'>
-                {this.state.connectedPlayers.map((player, index) => (
-                    <li className='WindowList'key={index}>{player.player_name} : {player.points}</li>
-                ))}
-                </div>                
-                    <div className='HeadContainer topleft'>
-                        <p>Points Won</p>
-                    </div>                            
-                <div className='ListContainer bottomleft'>
-                        {this.state.PointsWon.map((player, index) => (
+                <div className='ListContainer bottomright BorderLeft'>
+                    {this.state.connectedPlayers.map((player, index) => (
+                        <li className='WindowList'key={index}>{player.player_name} : {player.points}</li>
+                    ))}
+                </div>
+                <div className='HeaderContainer topleft BorderRight'>
+                    <p className='Header'>Points Won</p>
+                </div>
+                <div className='ListContainer bottomleft BorderRight'>                            
+                    {this.state.PointsWon.map((player, index) => (
                         <li className='WindowList'key={index}>Player {player.player_name} won {player.pointsWon} points</li>
                     ))}                                                
                 </div>                   
                 <Gamebutton socket ={socket} {...this.state}/>
+                {this.state.OutOfPoints ? <OutOfPointsPopup socket = {socket} ClosePopUp={this.ClosePopUp}/>
+                : null}
             </div>
         )
     }   

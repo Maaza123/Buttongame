@@ -94,7 +94,11 @@ io.
                         }
                     });
                 }else{
+<<<<<<< HEAD
                     if(player.points<1)() => socket.emit('OutOfPoints');
+=======
+                    socket.emit('outofpoints');
+>>>>>>> tmp
                     console.log('No points left');
                 }
             });            
