@@ -24,7 +24,7 @@ if(PORT == null || PORT == ""){
 app
     .use(cors())
     .use(cookieParser())
-    .use(express.static(path.join(__dirname, '../client/public')))
+    .use(express.static(path.join(__dirname, '../client/build')))
     .use(bodyParser.urlencoded({extended:true}))
     .use(bodyParser.json())
     .use(require('./routes'))
@@ -47,7 +47,15 @@ io.
                     'player_name' : playerdata.player_name,
                     'points' : playerdata.points                
                 };
-                    connectedPlayers.push(myy);
+                    let flag = true;
+                    connectedPlayers.find((player)=>{
+                        if(player.id === playerdata.id){
+                            flag = false;
+                        }
+                    })
+                    if(flag){
+                        connectedPlayers.push(myy);
+                    }
                     let sendData = [];
                     connectedPlayers.forEach((player) =>{
                         sendData.push({ 
@@ -81,7 +89,6 @@ io.
                                 'points' : player.points
                             });
                         });
-                        if(player.points<1)() => socket.emit('OutOfPoints');
                         //palauta peli tilanne
                         io.emit('playerdata', sendData);
                         socket.emit('pushesLeft',  playerdata.pushesLeft);

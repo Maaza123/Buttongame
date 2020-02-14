@@ -54,6 +54,11 @@
     bottom: 0;
     right: 0;
 }
+.PopupButton{
+    height: 2.8vw;
+    width: 8vw;
+    font-size: 1vw;
+}
 #OutOfPointsContainer{
     position: absolute;
     width: 25%;
