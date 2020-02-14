@@ -24,7 +24,7 @@ if(PORT == null || PORT == ""){
 app
     .use(cors())
     .use(cookieParser())
-    .use(express.static(path.join(__dirname, '../client/build')))
+    .use(express.static(path.join(__dirname, '../client/public')))
     .use(bodyParser.urlencoded({extended:true}))
     .use(bodyParser.json())
     .use(require('./routes'))
@@ -62,7 +62,11 @@ io.
             //funktio: tee tarvittavat toimenpiteet
             getPlayerData(cookies.id)
             .then((playerdata) => {
-                return(playerdata.points > 0)
+                if(playerdata.points > 0){
+                    return true;
+                }else{
+                    return false;
+                }
             }).then((pointsLeft) => {
                 if(pointsLeft){
                     ButtonClick(cookies.id)
