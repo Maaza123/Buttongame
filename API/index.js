@@ -25,7 +25,7 @@ app
     .use(cors())
     .use(cookieParser())
     .use(express.static(path.join(__dirname, '../client/build')))
-    .use(bodyParser.urlencoded({extended:true}))
+    .use(bodyParser.urlencoded({extended:false}))
     .use(bodyParser.json())
     .use(require('./routes'))
 
@@ -41,6 +41,7 @@ io.
     socket
         .on('init', function(data){
             cookies = cookie.parse(data);
+            if(cookies !== undefined){
             getPlayerData(cookies.id).then((playerdata)=>{
                 let myy = {
                     'id' : playerdata.id,
@@ -64,7 +65,7 @@ io.
                         });
                     io.emit('playerdata', sendData);
                 });
-            });
+            });}
         })
         .on('buttonclick', function(){
             //funktio: tee tarvittavat toimenpiteet
