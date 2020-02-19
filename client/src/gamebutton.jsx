@@ -1,6 +1,6 @@
 import React from 'react';
 import song from './piu.mp3';
-import {Howl, Howler} from 'howler';
+import {Howl} from 'howler';
 
 const src = song;
 class Gamebutton extends React.Component{  

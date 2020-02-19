@@ -38,6 +38,7 @@
     "socket.io-cookie-parser": "^1.0.0",
     "uifx": "^2.0.7",
     "uniqid": "^5.2.0",
+    "uuid": "^3.4.0",
     "ws": "^7.2.1"
   }
 }

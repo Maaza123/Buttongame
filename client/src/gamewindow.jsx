@@ -69,7 +69,7 @@ class GameWindow extends React.Component{
                 </div>
                 <div className='ListContainer bottomleft BorderRight'>                            
                     {this.state.PointsWon.map((player, index) => (
-                        <li className='WindowList'key={index}>Player {player.player_name} won {player.pointsWon} points</li>
+                        <li className='WindowList'key={index}>{player.player_name} won {player.pointsWon} points</li>
                     ))}                                                
                 </div>                   
                 <Gamebutton socket ={socket} {...this.state}/>

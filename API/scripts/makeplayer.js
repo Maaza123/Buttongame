@@ -1,10 +1,12 @@
 const promise = require('promise');
 const client = require(appRoot + '/scripts/databasepool');
+const uuidv4 = require('uuid/v4');
 
 module.exports = function(playername){
   console.log(playername);
-  const text = 'INSERT INTO players (id, player_name, points) VALUES (DEFAULT, $1, $2) RETURNING id;';
-  const values = [playername, 20];
+  let id = uuidv4();
+  const text = 'INSERT INTO players (id, player_name, points) VALUES ($1, $2, $3) RETURNING id;';
+  const values = [id, playername, 20];
   return new promise(function(resolve, reject){
     client.query(text, values, function(error, res){
       if (error){

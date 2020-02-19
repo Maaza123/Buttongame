@@ -2,7 +2,7 @@ import React from 'react';
 import Myform from './givename.jsx';
 import './App.css';
 import song from './manlet.mp3';
-import {Howl, Howler} from 'howler';
+import {Howl} from 'howler';
 import Gamewindow from './gamewindow';
 const src = song;
 

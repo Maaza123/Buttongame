@@ -2,23 +2,6 @@ const promise = require('promise')
 const client = require(appRoot + '/scripts/databasepool');
 let counter = require(appRoot + '/index');
 
-//Vähentää pelaajalta pisteen
-let decreasePoint = function(playerid){
-    let text = 'UPDATE PLAYERS SET points = points - 1 WHERE ID = ($1) RETURNING id, player_name, points;';
-    let vars = [playerid];
-    return new promise ((resolve, reject) =>{
-        client.query(text, vars, (error, res)=>{
-            if(error){
-                console.log('Error decresing points');
-                reject(0);
-            }else{
-                console.log('decreased points')
-                resolve(res.rows[0]);
-            }
-        });
-    });
-}
-
 //Lisää pelaajalle pisteitä
 let addPoints = function(pointsToAdd, playerid){
     let text = 'UPDATE PLAYERS SET points = points + ($1) WHERE id = ($2) RETURNING id, player_name, points;';
