@@ -21,18 +21,21 @@ class GameWindow extends React.Component{
         this.ClosePopUp = this.ClosePopUp.bind(this);
         socket
             .on('playerdata', (players) =>{
-            this.setState({ConnectedPlayers : players});
-            console.log('players', players);
-        })
+                this.setState({ConnectedPlayers : players});
+                console.log('players', players);
+            })
             .on('pushesLeft', (PushesLeft) =>{
-            this.HandlePushesLeft(PushesLeft);
-        })
+                this.HandlePushesLeft(PushesLeft);
+            })
             .on('outofpoints', () => {
                 this.OpenPopup();
             })
             .on('wonPoints', (PointsWon) =>{
                 this.HandlePointsWon(PointsWon);
-        });
+            })
+            .on('playerRemoved', () => {
+                this.props.changeAuth(false);
+            });
     }
     
     HandlePointsWon(PointsWon){

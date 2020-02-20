@@ -32,9 +32,8 @@ class Myform extends React.Component  {
 
                 <form className='Myform' onSubmit={this.HandleSubmit}>
                     <h1 className='nappulaPeli'>NAPPULAPELI</h1>
-                    <label for='namefield' style={{visibility: 'hidden'}}>playername</label>
                     <input type='Text' className='textfield' name='namefield' placeholder={this.state.name} onFocus={this.clearInput} onChange={this.HandleChange} />
-                    <input type='Button' className='button' onClick={this.HandleSubmit} defaultValue = 'Submit'/>     
+                    <input type='Submit' className='button' defaultValue = 'Submit'/>     
                 </form> 
                       
         );    

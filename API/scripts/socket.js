@@ -1,16 +1,39 @@
-let connectedPlayers = [];
 const path = require('path');
 const getPlayerData = require(path.resolve(appRoot, 'scripts', 'querygetplayerdata'));
 const cookie = require('cookie');
 const ButtonClick = require(path.resolve(appRoot , 'gamelogic', 'buttonclick'));
-const resetpoints = require(path.resolve(appRoot , 'gamelogic', 'resetpoints')); 
+const resetpoints = require(path.resolve(appRoot , 'gamelogic', 'resetpoints'));
+const removePlayer = require('./removeplayer');
+
+let connectedPlayers = [];
 
 startSocket = (io)=>{
     io.
     on('connection', function(socket){
     console.log('Connected to socket :' + socket.id);
     var cookies;
-    let PointsWonArray = [];       
+    let PointsWonArray = [];
+         
+    function emitPlayerData(){
+        let sendData = [];
+        connectedPlayers.forEach((player) =>{
+            sendData.push({ 
+                'player_name' : player.player_name,
+                'points' : player.points
+            });
+        });
+        io.emit('playerdata', sendData);    
+    }
+    
+    function removeFromConnectedPlayers(id){
+        for( var i = 0; i < connectedPlayers.length; i++){
+            if (connectedPlayers[i].id == id) {
+               connectedPlayers.splice(i, 1);
+            };
+        };
+        emitPlayerData();
+        socket.emit('playerRemoved');
+    }  
         
     socket
         .on('init', function(data){
@@ -22,24 +45,28 @@ startSocket = (io)=>{
                     'player_name' : playerdata.player_name,
                     'points' : playerdata.points                
                 };
-                    let flag = true;
-                    connectedPlayers.find((player)=>{
-                        if(player.id === playerdata.id){
-                            flag = false;
-                        }
-                    })
-                    if(flag){
-                        connectedPlayers.push(myy);
+                let flag = true;
+                connectedPlayers.find((player)=>{
+                    if(player.id === playerdata.id){
+                        flag = false;
                     }
-                    let sendData = [];
-                    connectedPlayers.forEach((player) =>{
-                        sendData.push({ 
-                            'player_name' : player.player_name,
-                            'points' : player.points
-                        });
-                    io.emit('playerdata', sendData);
-                });
-            });}
+                })
+                if(flag){
+                    connectedPlayers.push(myy);
+                }
+                emitPlayerData();
+            });
+            }
+        })
+        .on('changeName', function(){
+            console.log('asd');
+            removePlayer(cookies.id)
+            .then((response)=>{
+                console.log('response:' + response)
+                if(response === true){
+                    removeFromConnectedPlayers(cookies.id);
+                }
+            });
         })
         .on('buttonclick', function(){
             //funktio: tee tarvittavat toimenpiteet
@@ -102,14 +129,8 @@ startSocket = (io)=>{
         })
 
         .on('disconnect', function(){
-            console.log('Disconnected socket :'+ socket.id);
-                for( var i = 0; i < connectedPlayers.length; i++){
-                     if (connectedPlayers[i].id == cookies.id) {
-                        connectedPlayers.splice(i, 1);
-                    };
-                 };
-                 
-                 io.emit('playerdata', connectedPlayers);
+            console.log('Disconnected socket :'+ socket.id)
+                removeFromConnectedPlayers(cookies.id);
         });
 });
 }

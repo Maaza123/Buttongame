@@ -12,12 +12,11 @@ router.get('/', function(req, res){
         getPlayer(req.cookies.id)
         .then((data) =>{
             if(data !== undefined){
-                res.send({auth : false});
-            }else{
                 res.send({auth : true});
+            }else{
+                res.send({auth : false});
             }
         })      
-        res.send({auth : true});
     }
 });
 module.exports = router;

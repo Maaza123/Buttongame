@@ -5,12 +5,12 @@ class OutOfPointsPopup extends React.Component{
         super(props)
     }
     
-    ResetPoints= () => {
+    ResetPoints = () => {
         this.props.socket.emit('resetpoints');
         this.props.ClosePopUp();
     }
     ChangeName = () =>{
-        JSON.parse(document.cookie).id = null;
+        this.props.socket.emit('changeName');
     }
     render(){
         return(

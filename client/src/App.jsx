@@ -10,7 +10,8 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      auth : false};
+      auth : false
+    };
     this.changeAuth = this.changeAuth.bind(this);
   }
   callAPI =() => {
@@ -39,7 +40,7 @@ class App extends React.Component {
     if(this.state.auth){
       return(
         <div className='App'>
-          <Gamewindow />
+          <Gamewindow changeAuth = {this.changeAuth}/>
           {this.playSong()}
         </div>
       )

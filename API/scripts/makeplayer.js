@@ -11,6 +11,7 @@ module.exports = function(playername){
     client.query(text, values, function(error, res){
       if (error){
         console.log("pelaajan lisäys ei onnistunut");
+        console.log(error);
         reject(0);
       } else {
         console.log('playerid: '+ res.rows[0].id);
