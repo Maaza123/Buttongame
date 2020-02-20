@@ -9,12 +9,15 @@ class OutOfPointsPopup extends React.Component{
         this.props.socket.emit('resetpoints');
         this.props.ClosePopUp();
     }
+    ChangeName = () =>{
+        JSON.parse(document.cookie).id = null;
+    }
     render(){
         return(
             <div id='OutOfPointsContainer'>
                 <p>You are out of points</p>
                 <button className='button PopupButton' onClick={this.ResetPoints}>Reset Points</button>
-                <button className='button PopupButton'>Change Name</button>
+                <button className='button PopupButton' onClick={this.ChangeName}>Change Name</button>
             </div>
         )
     }

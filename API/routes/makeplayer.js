@@ -8,6 +8,8 @@ router.post('/', function (req, res){
     MakePlayer(req.body.playername).then((playerid)=>{
         console.log('kek');
         res.cookie('id', playerid, {httponly : false}).send({'auth' : true});    
+    }).catch(error => {
+        res.send()
     }); 
 });
 

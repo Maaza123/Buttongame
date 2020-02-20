@@ -4,6 +4,8 @@ const router = express.Router();
 
 router.use('/auth', require('./auth'));
 router.use('/makeplayer', require('./makeplayer'));
-router.use('/*', require('./init'));
+router.get('/*', function(req, res){
+    res.sendFile(path.join(appRoot, '../client/build/index.html'));
+});
 
 module.exports = router;
