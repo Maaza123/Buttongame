@@ -2,6 +2,8 @@ const promise = require('promise');
 const client = require(appRoot + '/scripts/databasepool');
 const uuidv4 = require('uuid/v4');
 
+//Lisää uuden pelaajan tietokantaan ja palauttaa pelaajan id:n.
+
 module.exports = function(playername){
   console.log(playername);
   let id = uuidv4();

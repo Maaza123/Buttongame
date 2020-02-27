@@ -19,7 +19,7 @@ if(PORT == null || PORT == ""){
 app
     .use(cors())
     .use(cookieParser())
-    .use(express.static(path.join(__dirname, '../client/build')))
+    .use(express.static(path.join(__dirname, '../client/public')))
     .use(bodyParser.urlencoded({extended:false}))
     .use(bodyParser.json())
     .use(require('./routes'))

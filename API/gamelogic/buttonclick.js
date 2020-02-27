@@ -2,6 +2,16 @@ const promise = require('promise')
 const client = require(appRoot + '/scripts/databasepool');
 let counter = require(appRoot + '/index');
 
+let dataPacket = function(){
+    let data = {
+        'id' : playerdata.id,
+        'points' : playerdata.points,
+        'player_name' : playerdata.player_name,
+        'pointsWon' : pointsWon,
+        'pushesLeft' : pushesLeft
+    };
+    return data;
+}
 //Lisää pelaajalle pisteitä
 let addPoints = function(pointsToAdd, playerid){
     let text = 'UPDATE PLAYERS SET points = points + ($1) WHERE id = ($2) RETURNING id, player_name, points;';
@@ -30,14 +40,7 @@ module.exports = function(playerid){
         return new promise ((resolve) =>{
             addPoints(pointsWon - 1, playerid)
             .then((playerdata) =>{
-                let data = {
-                    'id' : playerdata.id,
-                    'points' : playerdata.points,
-                    'player_name' : playerdata.player_name,
-                    'pointsWon' : pointsWon,
-                    'pushesLeft' : pushesLeft
-                };   
-                console.log('playerdata :' + JSON.stringify(data));            
+                let data = dataPacket(playerdata);
                 resolve(data);
             });
         });
@@ -47,14 +50,7 @@ module.exports = function(playerid){
         return new promise ((resolve) =>{
             addPoints(pointsWon - 1, playerid)
             .then((playerdata) =>{
-                let data = {
-                    'id' : playerdata.id,
-                    'points' : playerdata.points,
-                    'player_name' : playerdata.player_name,
-                    'pointsWon' : pointsWon,
-                    'pushesLeft' : pushesLeft
-                };   
-                console.log('playerdata :' + JSON.stringify(data));            
+                let data = data = dataPacket(playerdata);              
                 resolve(data);
             });
         });
@@ -65,14 +61,7 @@ module.exports = function(playerid){
             console.log('PointsWon :' + pointsWon);
             addPoints(pointsWon - 1, playerid)
             .then((playerdata) =>{
-                let data = {
-                    'id' : playerdata.id,
-                    'points' : playerdata.points,
-                    'player_name' : playerdata.player_name,
-                    'pointsWon' : pointsWon,
-                    'pushesLeft' : pushesLeft
-                };   
-                console.log('playerdata :' + JSON.stringify(data));            
+                let data = dataPacket(playerdata);   
                 resolve(data);
             });
         });
@@ -83,14 +72,7 @@ module.exports = function(playerid){
             console.log('PointsWon :' + pointsWon);
             addPoints(pointsWon - 1, playerid)
             .then((playerdata) =>{
-                let data = {
-                    'id' : playerdata.id,
-                    'points' : playerdata.points,
-                    'player_name' : playerdata.player_name,
-                    'pointsWon' : pointsWon,
-                    'pushesLeft' : pushesLeft
-                };   
-                console.log('playerdata :' + JSON.stringify(data));            
+                let data = dataPacket(playerdata);             
                 resolve(data);
             });
         });

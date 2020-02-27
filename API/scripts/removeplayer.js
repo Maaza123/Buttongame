@@ -1,6 +1,7 @@
 const promise = require('promise');
 const client = require(appRoot + '/scripts/databasepool');
 
+//Poistaa pelaajan tietokannasta pelaajan idn mukaan.
 module.exports = function(id){
   const text = 'DELETE FROM players WHERE id = ($1) RETURNING id';
   const values = [id];

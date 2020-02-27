@@ -22,7 +22,6 @@ class GameWindow extends React.Component{
         socket
             .on('playerdata', (players) =>{
                 this.setState({ConnectedPlayers : players});
-                console.log('players', players);
             })
             .on('pushesLeft', (PushesLeft) =>{
                 this.HandlePushesLeft(PushesLeft);

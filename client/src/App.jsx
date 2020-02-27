@@ -4,6 +4,12 @@ import './App.css';
 import song from './manlet.mp3';
 import {Howl} from 'howler';
 import Gamewindow from './gamewindow';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 const src = song;
 
 class App extends React.Component {

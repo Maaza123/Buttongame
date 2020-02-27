@@ -25,6 +25,7 @@ startSocket = (io)=>{
         io.emit('playerdata', sendData);    
     }
     
+    //Poistaa pelaajan connected players listasta ja emittaa uuden listan.
     function removeFromConnectedPlayers(id){
         for( var i = 0; i < connectedPlayers.length; i++){
             if (connectedPlayers[i].id == id) {

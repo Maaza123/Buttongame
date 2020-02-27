@@ -16,7 +16,6 @@ class Gamebutton extends React.Component{
           });
           sound.play();
         this.props.socket.emit('buttonclick');
-        console.log('lähti');
       }
     render(){
         return(
