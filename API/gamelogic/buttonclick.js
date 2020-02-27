@@ -2,7 +2,7 @@ const promise = require('promise')
 const client = require(appRoot + '/scripts/databasepool');
 let counter = require(appRoot + '/index');
 
-let dataPacket = function(playerdata){
+let dataPacket = function(playerdata, pointsWon, pushesLeft){
     let data = {
         'id' : playerdata.id,
         'points' : playerdata.points,
