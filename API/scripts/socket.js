@@ -6,13 +6,13 @@ const resetpoints = require(path.resolve(appRoot , 'gamelogic', 'resetpoints'));
 const removePlayer = require('./removeplayer');
 
 let connectedPlayers = [];
+let PointsWonArray = [];
 
 startSocket = (io)=>{
     io.
     on('connection', function(socket){
     console.log('Connected to socket :' + socket.id);
     var cookies;
-    let PointsWonArray = [];
          
     function emitPlayerData(){
         let sendData = [];
