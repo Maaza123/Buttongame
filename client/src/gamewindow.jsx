@@ -36,7 +36,7 @@ class GameWindow extends React.Component{
                 this.props.changeAuth(false);
             });
     }
-    
+
     HandlePointsWon(PointsWon){
             this.setState({
                 PointsWon : PointsWon

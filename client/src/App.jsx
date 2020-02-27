@@ -1,16 +1,9 @@
 import React from 'react';
 import Myform from './givename.jsx';
 import './App.css';
-import song from './manlet.mp3';
-import {Howl} from 'howler';
 import Gamewindow from './gamewindow';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-const src = song;
+
+
 
 class App extends React.Component {
   constructor(props){
@@ -27,15 +20,7 @@ class App extends React.Component {
       this.setState({auth: data.auth});
     });
   }
-  playSong =() => {
-    const sound = new Howl({
-      src: [src],
-      autoplay: true,
-      loop: true,
-      volume: (0.25)
-    });
-    sound.play();
-  }
+  
   changeAuth = (value) => {
     this.setState({auth : value});
   }
@@ -47,7 +32,6 @@ class App extends React.Component {
       return(
         <div className='App'>
           <Gamewindow changeAuth = {this.changeAuth}/>
-          {this.playSong()}
         </div>
       )
     }else{
