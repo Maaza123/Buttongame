@@ -2,7 +2,7 @@ const promise = require('promise')
 const client = require(appRoot + '/scripts/databasepool');
 let counter = require(appRoot + '/index');
 
-let dataPacket = function(){
+let dataPacket = function(playerdata){
     let data = {
         'id' : playerdata.id,
         'points' : playerdata.points,
@@ -10,6 +10,7 @@ let dataPacket = function(){
         'pointsWon' : pointsWon,
         'pushesLeft' : pushesLeft
     };
+    
     return data;
 }
 //Lisää pelaajalle pisteitä
@@ -50,7 +51,7 @@ module.exports = function(playerid){
         return new promise ((resolve) =>{
             addPoints(pointsWon - 1, playerid)
             .then((playerdata) =>{
-                let data = data = dataPacket(playerdata);              
+                let data  = dataPacket(playerdata);              
                 resolve(data);
             });
         });
