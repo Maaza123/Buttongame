@@ -41,7 +41,7 @@ module.exports = function(playerid){
         return new promise ((resolve) =>{
             addPoints(pointsWon - 1, playerid)
             .then((playerdata) =>{
-                let data = dataPacket(playerdata);
+                let data  = dataPacket(playerdata, pointsWon, pushesLeft);
                 resolve(data);
             });
         });
@@ -51,7 +51,7 @@ module.exports = function(playerid){
         return new promise ((resolve) =>{
             addPoints(pointsWon - 1, playerid)
             .then((playerdata) =>{
-                let data  = dataPacket(playerdata);              
+                let data  = dataPacket(playerdata, pointsWon, pushesLeft);              
                 resolve(data);
             });
         });
@@ -62,7 +62,7 @@ module.exports = function(playerid){
             console.log('PointsWon :' + pointsWon);
             addPoints(pointsWon - 1, playerid)
             .then((playerdata) =>{
-                let data = dataPacket(playerdata);   
+                let data  = dataPacket(playerdata, pointsWon, pushesLeft);   
                 resolve(data);
             });
         });
@@ -73,7 +73,7 @@ module.exports = function(playerid){
             console.log('PointsWon :' + pointsWon);
             addPoints(pointsWon - 1, playerid)
             .then((playerdata) =>{
-                let data = dataPacket(playerdata);             
+                let data  = dataPacket(playerdata, pointsWon, pushesLeft);             
                 resolve(data);
             });
         });
