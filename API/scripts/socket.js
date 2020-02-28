@@ -56,6 +56,7 @@ startSocket = (io)=>{
                     connectedPlayers.push(myy);
                 }
                 emitPlayerData();
+                socket.emit('wonPoints', PointsWonArray);
             });
             }
         })
